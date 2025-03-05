@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menstrual Count Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Menstrual Count Tracker</h1>
+    <p>Track your bleeding to determine *haidh* or *istihadhah* (Shafi’i)</p>
+    <form id="trackerForm">
+        <label>Start Date of Bleeding:</label><br>
+        <input type="date" id="startDate" required><br><br>
+
+        <label>Days of Bleeding So Far:</label><br>
+        <input type="number" id="duration" min="1" required><br><br>
+
+        <label>Initial Blood Color (when bleeding started):</label><br>
+        <select id="initialColor" required>
+            <option value="dark">Dark red or black, thick</option>
+            <option value="light">Thin red</option>
+            <option value="brown">Brownish</option>
+            <option value="yellow">Yellowish</option>
+        </select><br><br>
+
+        <label>Current State:</label><br>
+        <select id="color" required>
+            <option value="dark">Dark red or black, thick</option>
+            <option value="light">Thin red</option>
+            <option value="brown">Brownish</option>
+            <option value="yellow">Yellowish</option>
+            <option value="white">White, clear discharge</option>
+            <option value="none">None (bleeding stopped, vagina clean)</option>
+        </select><br><br>
+
+        <label>Usual Haidh Duration (days):</label><br>
+        <input type="number" id="usualHaidh" min="1" max="15" required><br><br>
+
+        <label>Days of Purity Before This (leave blank if unsure):</label><br>
+        <input type="number" id="purityDays" min="0"><br><br>
+
+        <button type="submit">Check Status</button>
+    </form>
+    <p id="result"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>
