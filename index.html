@@ -2,46 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Menstrual Count Tracker</title>
+    <title>Menstrual Count Q&A</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Menstrual Count Tracker</h1>
-    <p>Track your bleeding to determine *haidh* or *istihadhah* (Shafi’i)</p>
-    <form id="trackerForm">
-        <label>Start Date of Bleeding:</label><br>
-        <input type="date" id="startDate" required><br><br>
+    <header>
+        <h1>Muslimah Knows Her Day</h1>
+        <div id="languageSwitch">
+            <label for="language">Pilih Bahasa / Choose Language:</label>
+            <select id="language">
+                <option value="en">English</option>
+                <option value="bm">Bahasa Melayu</option>
+            </select>
+        </div>
+    </header>
 
-        <label>Days of Bleeding So Far:</label><br>
-        <input type="number" id="duration" min="1" required><br><br>
+    <main>
+        <p>Answer step-by-step to determine *haidh* or *istihadhah* (Shafi’i)</p>
+        <div id="qaContainer">
+            <div id="question"></div>
+            <div id="inputArea"></div>
+            <button id="nextBtn" style="display: none;">Next</button>
+        </div>
+        <p id="result" style="display: none;"></p>
 
-        <label>Initial Blood Color (when bleeding started):</label><br>
-        <select id="initialColor" required>
-            <option value="dark">Dark red or black, thick</option>
-            <option value="light">Thin red</option>
-            <option value="brown">Brownish</option>
-            <option value="yellow">Yellowish</option>
-        </select><br><br>
-
-        <label>Current State:</label><br>
-        <select id="color" required>
-            <option value="dark">Dark red or black, thick</option>
-            <option value="light">Thin red</option>
-            <option value="brown">Brownish</option>
-            <option value="yellow">Yellowish</option>
-            <option value="white">White, clear discharge</option>
-            <option value="none">None (bleeding stopped, vagina clean)</option>
-        </select><br><br>
-
-        <label>Usual Haidh Duration (days):</label><br>
-        <input type="number" id="usualHaidh" min="1" max="15" required><br><br>
-
-        <label>Days of Purity Before This (leave blank if unsure):</label><br>
-        <input type="number" id="purityDays" min="0"><br><br>
-
-        <button type="submit">Check Status</button>
-    </form>
-    <p id="result"></p>
+        <section id="interactiveSection">
+            <div id="donation">
+                <p>Support this project: <a href="https://www.paypal.com/ncp/payment/HDTGEAMDG97GE" target="_blank" onclick="window.open(this.href, '_blank'); return false;">Donate via PayPal</a></p>
+            </div>
+            <div id="suggestionBox">
+                <h2>Your Suggestions</h2>
+                <div id="comments"></div>
+                <textarea id="suggestionInput" placeholder="Share your thoughts..."></textarea>
+                <button id="submitSuggestion">Submit</button>
+            </div>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
