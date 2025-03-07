@@ -1,65 +1,138 @@
 body {
-  font-family: Arial, sans-serif;
-  max-width: 600px;
-  margin: 20px auto;
+  font-family: 'Arial', sans-serif;
+  max-width: 700px;
+  margin: 0 auto;
   padding: 20px;
-  background-color: #e6f3f7; /* Light turquoise background */
-  color: #003366; /* Deep blue text */
+  background: linear-gradient(135deg, #e6f3f7, #b3d9e6); /* Futuristic gradient */
+  color: #003366;
+  position: relative;
+  overflow-x: hidden;
 }
 
-h1 {
-  font-weight: bold;
+/* Muslimah Background */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://cdn.pixabay.com/photo/2020/07/06/10/14/muslim-5376658_1280.png') no-repeat center center; /* Replace with your image URL */
+  background-size: cover;
+  opacity: 0.1; /* Subtle transparency */
+  z-index: -1;
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 0.1; }
+}
+
+header {
   text-align: center;
-  color: #006d77; /* Turquoise header */
-  font-size: 2em;
-  margin-bottom: 10px;
-  text-transform: uppercase;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #006d77; /* Border below title */
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 77, 128, 0.2);
 }
 
-p {
-  color: #004d80; /* Slightly lighter blue */
+header h1 {
+  font-weight: bold;
+  color: #006d77;
+  font-size: 2.2em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px; /* Futuristic spacing */
+}
+
+#languageSwitch {
+  margin-bottom: 10px;
+}
+
+#languageSwitch label {
+  font-weight: bold;
+  color: #003366;
+  margin-right: 10px;
+}
+
+#languageSwitch select {
+  padding: 6px;
+  border: 2px solid #006d77;
+  border-radius: 5px;
+  background-color: #f0f8fa;
+  color: #003366;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+#languageSwitch select:hover {
+  background-color: #e0f0f5;
+  border-color: #004d80;
+}
+
+main p {
+  color: #004d80;
   text-align: center;
   margin-bottom: 20px;
+  font-size: 1.1em;
 }
 
-form {
-  background-color: #ffffff; /* White form background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 77, 128, 0.2); /* Subtle blue shadow */
-  border: 2px solid #006d77; /* Turquoise border */
+#qaContainer {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 77, 128, 0.3);
+  border: 2px solid #006d77;
+  margin-bottom: 25px;
+  transition: transform 0.2s ease; /* Interactive hover */
 }
 
-label {
-  display: block;
-  margin: 10px 0 5px;
+#qaContainer:hover {
+  transform: scale(1.02);
+}
+
+#question {
   font-weight: bold;
-  color: #003366; /* Deep blue labels */
-}
-
-input, select {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #006d77; /* Turquoise border */
-  border-radius: 4px;
-  background-color: #f0f8fa; /* Very light turquoise field */
   color: #003366;
+  margin-bottom: 15px;
+  font-size: 1.2em;
 }
 
-button {
-  background-color: #006d77; /* Turquoise button */
-  color: white;
+#inputArea input, #inputArea select {
+  width: 100%;
   padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #006d77;
+  border-radius: 5px;
+  background-color: #f0f8fa;
+  color: #003366;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+}
+
+#inputArea input:focus, #inputArea select:focus {
+  border-color: #004d80;
+  outline: none;
+}
+
+#nextBtn {
+  background-color: #006d77;
+  color: white;
+  padding: 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   width: 100%;
   font-weight: bold;
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-button:hover {
-  background-color: #004d80; /* Darker blue on hover */
+#nextBtn:hover {
+  background-color: #004d80;
+  transform: translateY(-2px);
 }
 
 #result {
@@ -67,9 +140,12 @@ button:hover {
   font-weight: bold;
   color: #003366;
   text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 77, 128, 0.2);
 }
 
-/* Note styling for the warning */
 #result::after {
   content: attr(data-note);
   display: block;
@@ -79,14 +155,105 @@ button:hover {
   margin-top: 5px;
 }
 
-/* Simple Islamic-inspired art (crescent moon) */
-body::before {
-  content: "☾";
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 40px;
+#interactiveSection {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 3px solid #006d77; /* Border above interactive section */
+}
+
+#donation {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#donation p {
+  color: #004d80;
+  font-size: 1em;
+}
+
+#donation a {
   color: #006d77;
-  opacity: 0.2;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  border: 2px solid #006d77;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+#donation a:hover {
+  background-color: #006d77;
+  color: white;
+  text-decoration: none;
+}
+
+#suggestionBox {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 77, 128, 0.2);
+  border: 2px solid #006d77;
+}
+
+#suggestionBox h2 {
+  font-size: 1.3em;
+  color: #006d77;
+  margin-bottom: 15px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+#comments {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 2px solid #006d77;
+  border-radius: 5px;
+  background-color: #f0f8fa;
+}
+
+#comments p {
+  margin: 8px 0;
+  font-size: 0.95em;
+  color: #003366;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+}
+
+#suggestionInput {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #006d77;
+  border-radius: 5px;
+  background-color: #f0f8fa;
+  color: #003366;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+}
+
+#suggestionInput:focus {
+  border-color: #004d80;
+  outline: none;
+}
+
+#submitSuggestion {
+  background-color: #006d77;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#submitSuggestion:hover {
+  background-color: #004d80;
+  transform: translateY(-2px);
 }
