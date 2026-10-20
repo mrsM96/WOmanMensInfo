@@ -1,49 +1,459 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <title>Menstrual Count Q&A</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Jokerman&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muslimah Knows Her Day</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        islamic: {
+                            50: '#f4f8f6',
+                            100: '#e3eee9',
+                            200: '#c7ded4',
+                            300: '#9ecbb8',
+                            600: '#3b7a61',
+                            700: '#2f624d',
+                            800: '#27503f',
+                            900: '#204134',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom smooth transition for steps */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Muslimah Knows Her Day</h1>
-        <div id="languageSwitch">
-            <label for="language">Pilih Bahasa / Choose Language:</label>
-            <select id="language">
-                <option value="en">English</option>
-                <option value="bm">Bahasa Melayu</option>
-            </select>
+<body class="bg-islamic-50 text-slate-800 h-full flex flex-col justify-between antialiased selection:bg-islamic-200">
+
+    <!-- Top Navigation / Header -->
+    <header class="bg-white border-b border-islamic-100 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-islamic-600 text-white flex items-center justify-center font-bold text-lg shadow-inner">
+                    ☪
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold text-islamic-900 tracking-tight">Muslimah Knows Her Day</h1>
+                    <p class="text-xs text-slate-500 hidden sm:block">Shafi'i Jurisprudence Haidh & Istihadhah Calculator</p>
+                </div>
+            </div>
+            <!-- Language Selector -->
+            <div>
+                <select id="language" class="bg-islamic-50 border border-islamic-200 text-islamic-800 text-sm rounded-lg focus:ring-islamic-600 focus:border-islamic-600 block p-2 font-medium cursor-pointer transition">
+                    <option value="en">English</option>
+                    <option value="bm">Bahasa Melayu</option>
+                </select>
+            </div>
         </div>
     </header>
 
-    <main>
-        <p>Answer step-by-step to determine *haidh* or *istihadhah* (Shafi’i)</p>
-        <div id="qaContainer">
-            <div id="question"></div>
-            <div id="inputArea"></div>
-            <button id="nextBtn" style="display: none;">Next</button>
-        </div>
-        <p id="result" style="display: none;"></p>
+    <!-- Main Container -->
+    <main class="max-w-xl w-full mx-auto px-4 py-8 flex-grow flex flex-col justify-center">
+        <!-- Intro text -->
+        <p class="text-center text-sm md:text-base text-slate-600 mb-6 font-medium">
+            Answer step-by-step to determine *haidh* or *istihadhah* (Shafi’i)
+        </p>
 
-        <section id="interactiveSection">
-            <div id="donation">
-                <p>Support this project: 
-                    <a href="https://paypal.me/MuslimahPower?country.x=MY&locale.x=en_US" 
-                       target="_blank" 
-                       rel="noopener noreferrer">Donate via PayPal</a>
-                </p>
+        <!-- Calculator Card -->
+        <div class="bg-white rounded-2xl shadow-xl border border-islamic-100 p-6 md:p-8 transition-all">
+            
+            <!-- Q&A Section -->
+            <div id="qaContainer" class="fade-in">
+                <div id="question" class="text-base md:text-lg font-semibold text-islamic-900 mb-5 leading-snug">
+                    <!-- Dynamic Question Text -->
+                </div>
+                <div id="inputArea" class="mb-6">
+                    <!-- Dynamic Input Element -->
+                </div>
+                <div class="flex items-center justify-between pt-2">
+                    <button id="nextBtn" class="w-full bg-islamic-600 hover:bg-islamic-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition duration-200 transform active:scale-[0.99] cursor-pointer">
+                        Next
+                    </button>
+                </div>
             </div>
-            <div id="suggestionBox">
-                <h2>Your Suggestions</h2>
-                <div id="comments"></div>
-                <textarea id="suggestionInput" placeholder="Share your thoughts..."></textarea>
-                <button id="submitSuggestion">Submit</button>
+
+            <!-- Result Section -->
+            <div id="result" style="display: none;" class="fade-in bg-islamic-50 border-l-4 border-islamic-600 p-5 rounded-r-xl text-slate-700 text-base leading-relaxed">
+                <!-- Result content -->
             </div>
-        </section>
+
+            <!-- Reset / Restart button container -->
+            <div id="restartContainer" class="mt-6 text-center"></div>
+        </div>
+
+        <!-- Suggestion / Community Feedback Section -->
+        <div id="suggestionBox" class="mt-8 bg-white rounded-xl shadow-sm border border-islamic-100 p-5">
+            <h2 class="text-sm font-semibold text-islamic-900 mb-3 flex items-center gap-2">
+                <span>💬</span> Your Suggestions
+            </h2>
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="suggestionInput" placeholder="Share your thoughts..." class="flex-grow bg-islamic-50 border border-islamic-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-islamic-600">
+                <button id="submitSuggestion" class="bg-islamic-600 hover:bg-islamic-700 text-white font-medium px-4 py-2 rounded-lg text-sm transition cursor-pointer">Post</button>
+            </div>
+            <div id="comments" class="space-y-2 max-h-36 overflow-y-auto text-xs text-slate-600 divide-y divide-slate-100">
+                <!-- Community feedback items -->
+            </div>
+        </div>
     </main>
 
-    <script src="script.js"></script>
+    <!-- Footer with Donation Link -->
+    <footer id="donation" class="bg-white border-t border-islamic-100 py-4 text-center text-xs text-slate-500">
+        <p class="font-medium">
+            Support this project: <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" target="_blank" class="text-islamic-600 underline hover:text-islamic-800 transition">Donate via PayPal</a>
+        </p>
+    </footer>
+
+    <!-- Custom Modal Replacement for Alert -->
+    <div id="customModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl border border-islamic-100 text-center fade-in">
+            <h3 id="modalTitle" class="text-lg font-bold text-islamic-900 mb-2">Notice</h3>
+            <p id="modalMessage" class="text-sm text-slate-600 mb-5">Please answer the question.</p>
+            <button id="modalCloseBtn" class="bg-islamic-600 hover:bg-islamic-700 text-white font-medium px-5 py-2.5 rounded-xl text-sm w-full transition cursor-pointer">OK</button>
+        </div>
+    </div>
+
+    <!-- Script Integration -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const qaContainer = document.getElementById('qaContainer');
+            const questionDiv = document.getElementById('question');
+            const inputArea = document.getElementById('inputArea');
+            const nextBtn = document.getElementById('nextBtn');
+            const resultP = document.getElementById('result');
+            const languageSelect = document.getElementById('language');
+            const introP = document.querySelector('main p');
+            const suggestionInput = document.getElementById('suggestionInput');
+            const submitSuggestion = document.getElementById('submitSuggestion');
+            const commentsDiv = document.getElementById('comments');
+            const restartContainer = document.getElementById('restartContainer');
+
+            // Modal elements
+            const customModal = document.getElementById('customModal');
+            const modalMessage = document.getElementById('modalMessage');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+            function showAlert(msg) {
+                modalMessage.textContent = msg;
+                customModal.classList.remove('hidden');
+            }
+
+            modalCloseBtn.addEventListener('click', () => {
+                customModal.classList.add('hidden');
+            });
+
+            let step = 1;
+            let answers = {};
+            let askDaysInstead = false;
+            let currentLang = 'en';
+
+            const texts = {
+                en: {
+                    title: 'Muslimah Knows Her Day',
+                    intro: 'Answer step-by-step to determine *haidh* or *istihadhah* (Shafi’i)',
+                    next: 'Next',
+                    restart: 'Calculate Again',
+                    q1: 'When did the bleeding start?',
+                    q2: 'What was the initial color of the bleeding?',
+                    q3Hours: 'How many hours has the bleeding lasted so far?',
+                    q3Days: 'How many days has the bleeding lasted so far?',
+                    q4: 'How many days were you free of bleeding before this started? (Leave blank if unsure)',
+                    q5: 'If unsure about purity days, when did your last menstruation start?',
+                    q6: 'What is the current state of your bleeding?',
+                    colors: {
+                        dark: 'Dark red or black, thick',
+                        light: 'Thin red',
+                        brown: 'Brownish',
+                        yellow: 'Yellowish',
+                        white: 'White, clear discharge',
+                        none: 'None (bleeding stopped, vagina clean)'
+                    },
+                    results: {
+                        istihadhahShort: 'Bleeding less than 24 hours is *istihadhah*. Continue praying with wudu.',
+                        haidh: 'This is likely *haidh* (Shafi’i). You’re excused from prayer and fasting for {days} days. Perform ghusl when it stops.',
+                        haidhEnd: 'Bleeding stopped with {state}. *Haidh* has ended after {days} days. Perform ghusl and resume prayer/fasting.',
+                        istihadhahLong: 'Bleeding beyond 15 days is *istihadhah*. Resume prayer with wudu after day 15.',
+                        yellowDischarge: 'Initial and current yellow is vaginal discharge, not *haidh*. Continue praying and fasting.',
+                        yellowNoHaidh: 'Yellow followed by {state} suggests no *haidh* occurred. Continue praying/fasting normally.',
+                        unclear: 'Current state isn’t typical for *haidh*. Consult a scholar.',
+                        purityShort: 'Purity ({days} days) too short—likely *istihadhah*. Continue praying with wudu.'
+                    },
+                    suggestionTitle: 'Your Suggestions',
+                    suggestionPlaceholder: 'Share your thoughts...'
+                },
+                bm: {
+                    title: 'Muslimah Tahu Harinya',
+                    intro: 'Jawab langkah demi langkah untuk menentukan *haidh* atau *istihadhah* (Mazhab Shafi’i)',
+                    next: 'Seterusnya',
+                    restart: 'Kira Semula',
+                    q1: 'Bilakah pendarahan bermula?',
+                    q2: 'Apakah warna awal pendarahan?',
+                    q3Hours: 'Berapa jam pendarahan telah berlangsung setakat ini?',
+                    q3Days: 'Berapa hari pendarahan telah berlangsung setakat ini?',
+                    q4: 'Berapa hari anda bebas dari pendarahan sebelum ini bermula? (Kosongkan jika tidak pasti)',
+                    q5: 'Jika tidak pasti tentang hari suci, bilakah haid terakhir anda bermula?',
+                    q6: 'Apakah keadaan pendarahan anda sekarang?',
+                    colors: {
+                        dark: 'Merah gelap atau hitam, pekat',
+                        light: 'Merah cair',
+                        brown: 'Kekuningan',
+                        yellow: 'Kuning',
+                        white: 'Putih, jernih',
+                        none: 'Tiada (pendarahan berhenti, faraj bersih)'
+                    },
+                    results: {
+                        istihadhahShort: 'Pendarahan kurang dari 24 jam adalah *istihadhah*. Teruskan solat dengan wuduk.',
+                        haidh: 'Ini mungkin *haidh* (Shafi’i). Anda dikecualikan dari solat dan puasa selama {days} hari. Mandi wajib apabila berhenti.',
+                        haidhEnd: 'Pendarahan berhenti dengan {state}. *Haidh* telah tamat selepas {days} hari. Mandi wajib dan sambung solat/puasa.',
+                        istihadhahLong: 'Pendarahan melebihi 15 hari adalah *istihadhah*. Sambung solat dengan wuduk selepas hari ke-15.',
+                        yellowDischarge: 'Kuning awal dan kini adalah keputihan, bukan *haidh*. Teruskan solat dan puasa.',
+                        yellowNoHaidh: 'Kuning diikuti {state} menunjukkan tiada *haidh*. Teruskan solat/puasa seperti biasa.',
+                        unclear: 'Keadaan kini tidak tipikal untuk *haidh*. Rujuk kepada ulama.',
+                        purityShort: 'Kesucian ({days} hari) terlalu pendek—mungkin *istihadhah*. Teruskan solat dengan wuduk.'
+                    },
+                    suggestionTitle: 'Cadangan Anda',
+                    suggestionPlaceholder: 'Kongsi pendapat anda...'
+                }
+            };
+
+            function updateLanguage() {
+                currentLang = languageSelect.value;
+                document.querySelector('header h1').textContent = texts[currentLang].title;
+                introP.textContent = texts[currentLang].intro;
+                if(nextBtn) nextBtn.textContent = texts[currentLang].next;
+                document.querySelector('#suggestionBox h2').innerHTML = `<span>💬</span> ${texts[currentLang].suggestionTitle}`;
+                suggestionInput.placeholder = texts[currentLang].suggestionPlaceholder;
+                document.querySelector('#donation p').innerHTML = `${currentLang === 'en' ? 'Support this project' : 'Sokong projek ini'}: <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" target="_blank" class="text-islamic-600 underline hover:text-islamic-800 transition">Donate via PayPal</a>`;
+                
+                const restartBtnEl = document.getElementById('restartBtn');
+                if (restartBtnEl) restartBtnEl.textContent = texts[currentLang].restart;
+
+                if (step <= 6) showQuestion();
+            }
+
+            languageSelect.addEventListener('change', updateLanguage);
+
+            function showQuestion() {
+                inputArea.innerHTML = '';
+                nextBtn.style.display = 'block';
+                resultP.style.display = 'none';
+                restartContainer.innerHTML = '';
+
+                switch (step) {
+                    case 1:
+                        questionDiv.textContent = texts[currentLang].q1;
+                        inputArea.innerHTML = '<input type="date" id="startDate" class="w-full bg-islamic-50 border border-islamic-200 text-islamic-900 text-sm rounded-xl p-3 focus:outline-none focus:border-islamic-600" required>';
+                        break;
+                    case 2:
+                        questionDiv.textContent = texts[currentLang].q2;
+                        inputArea.innerHTML = `
+                            <select id="initialColor" class="w-full bg-islamic-50 border border-islamic-200 text-islamic-900 text-sm rounded-xl p-3 focus:outline-none focus:border-islamic-600 cursor-pointer" required>
+                                <option value="dark">${texts[currentLang].colors.dark}</option>
+                                <option value="light">${texts[currentLang].colors.light}</option>
+                                <option value="brown">${texts[currentLang].colors.brown}</option>
+                                <option value="yellow">${texts[currentLang].colors.yellow}</option>
+                            </select>`;
+                        break;
+                    case 3:
+                        const startDateVal = answers[1];
+                        if (startDateVal) {
+                            const startDate = new Date(startDateVal);
+                            const today = new Date();
+                            const diffTime = today - startDate;
+                            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                            if (diffDays >= 2) {
+                                askDaysInstead = true;
+                                questionDiv.textContent = texts[currentLang].q3Days;
+                                inputArea.innerHTML = '<input type="number" id="duration" min="2" class="w-full bg-islamic-50 border border-islamic-200 text-islamic-900 text-sm rounded-xl p-3 focus:outline-none focus:border-islamic-600" placeholder="e.g. 3" required>';
+                            } else {
+                                askDaysInstead = false;
+                                questionDiv.textContent = texts[currentLang].q3Hours;
+                                inputArea.innerHTML = '<input type="number" id="duration" min="1" class="w-full bg-islamic-50 border border-islamic-200 text-islamic-900 text-sm rounded-xl p-3 focus:outline-none focus:border-islamic-600" placeholder="e.g. 12" required>';
+                            }
+                        }
+                        break;
+                    case 4:
+                        questionDiv.textContent = texts[currentLang].q4;
+                        inputArea.innerHTML = '<input type="number" id="purityDays" min="0" class="w-full bg-islamic-50 border border-islamic-200 text-islamic-900 text-sm rounded-xl p-3 focus:outline-none focus:border-islamic-600" placeholder="Optional">';
+                        break;
+                    case 5:
+                        questionDiv.textContent = texts[currentLang].q5;
+                        inputArea.innerHTML = '<input type="date" id="lastMensDate" class="w-full bg-islamic-50 border border-islamic-200 text-islamic-900 text-sm rounded-xl p-3 focus:outline-none focus:border-islamic-600">';
+                        break;
+                    case 6:
+                        questionDiv.textContent = texts[currentLang].q6;
+                        inputArea.innerHTML = `
+                            <select id="color" class="w-full bg-islamic-50 border border-islamic-200 text-islamic-900 text-sm rounded-xl p-3 focus:outline-none focus:border-islamic-600 cursor-pointer" required>
+                                <option value="dark">${texts[currentLang].colors.dark}</option>
+                                <option value="light">${texts[currentLang].colors.light}</option>
+                                <option value="brown">${texts[currentLang].colors.brown}</option>
+                                <option value="yellow">${texts[currentLang].colors.yellow}</option>
+                                <option value="white">${texts[currentLang].colors.white}</option>
+                                <option value="none">${texts[currentLang].colors.none}</option>
+                            </select>`;
+                        break;
+                }
+            }
+
+            nextBtn.addEventListener('click', function() {
+                let input;
+                if (step === 1) input = document.getElementById('startDate');
+                else if (step === 2) input = document.getElementById('initialColor');
+                else if (step === 3) input = document.getElementById('duration');
+                else if (step === 4) input = document.getElementById('purityDays');
+                else if (step === 5) input = document.getElementById('lastMensDate');
+                else if (step === 6) input = document.getElementById('color');
+
+                if (step < 4 && (!input || !input.value)) {
+                    showAlert(currentLang === 'en' ? 'Please answer the question.' : 'Sila jawab soalan.');
+                    return;
+                }
+
+                if (input) {
+                    answers[step] = input.value;
+                }
+
+                if (step === 3) {
+                    const duration = parseInt(answers[3]);
+                    if (!askDaysInstead && duration < 24) {
+                        showResult(texts[currentLang].results.istihadhahShort);
+                        return;
+                    }
+                }
+
+                if (step === 4 && answers[4]) {
+                    step = 5; // Skip step 5 if purity days are provided
+                }
+
+                step++;
+                if (step > 6) {
+                    calculateResult();
+                } else {
+                    showQuestion();
+                }
+            });
+
+            function showResult(result, note = '') {
+                qaContainer.style.display = 'none';
+                nextBtn.style.display = 'none';
+                resultP.style.display = 'block';
+                resultP.innerHTML = result.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+                if (note) resultP.setAttribute('data-note', note);
+
+                restartContainer.innerHTML = `<button id="restartBtn" class="bg-islamic-100 hover:bg-islamic-200 text-islamic-800 font-semibold py-2.5 px-5 rounded-xl text-sm transition cursor-pointer">${texts[currentLang].restart}</button>`;
+                document.getElementById('restartBtn').addEventListener('click', function() {
+                    step = 1;
+                    answers = {};
+                    askDaysInstead = false;
+                    qaContainer.style.display = 'block';
+                    showQuestion();
+                });
+            }
+
+            function calculateResult() {
+                const startDate = new Date(answers[1]);
+                const initialColor = answers[2];
+                const durationInput = parseInt(answers[3]);
+                const purityDays = answers[4] ? parseInt(answers[4]) : null;
+                const lastMensDate = answers[5] ? new Date(answers[5]) : null;
+                const currentColor = answers[6];
+
+                const durationDays = askDaysInstead ? durationInput : Math.floor(durationInput / 24);
+                const haidhColors = ['dark', 'light', 'brown'];
+                let effectivePurity = purityDays;
+
+                if (!purityDays && lastMensDate) {
+                    const diffTime = startDate - lastMensDate;
+                    effectivePurity = Math.floor(diffTime / (1000 * 60 * 60 * 24)) - 1;
+                }
+                if (!effectivePurity) effectivePurity = 15;
+
+                let result = '';
+                let note = '';
+
+                if (durationDays <= 15) {
+                    if (haidhColors.includes(initialColor)) {
+                        if (haidhColors.includes(currentColor) || currentColor === 'yellow') {
+                            if (effectivePurity >= 1) {
+                                result = texts[currentLang].results.haidh.replace('{days}', durationDays);
+                            } else {
+                                result = texts[currentLang].results.purityShort.replace('{days}', effectivePurity);
+                            }
+                        } else if (currentColor === 'white' || currentColor === 'none') {
+                            const state = texts[currentLang].colors[currentColor];
+                            result = texts[currentLang].results.haidhEnd.replace('{state}', state).replace('{days}', durationDays);
+                        } else {
+                            result = texts[currentLang].results.unclear;
+                        }
+                    } else if (initialColor === 'yellow') {
+                        if (haidhColors.includes(currentColor)) {
+                            if (effectivePurity >= 1) {
+                                result = texts[currentLang].results.haidh.replace('{days}', durationDays);
+                            } else {
+                                result = texts[currentLang].results.purityShort.replace('{days}', effectivePurity);
+                            }
+                        } else if (currentColor === 'yellow') {
+                            result = texts[currentLang].results.yellowDischarge;
+                        } else if (currentColor === 'white' || currentColor === 'none') {
+                            const state = texts[currentLang].colors[currentColor];
+                            result = texts[currentLang].results.yellowNoHaidh.replace('{state}', state);
+                        }
+                    }
+                } else {
+                    result = texts[currentLang].results.istihadhahLong;
+                }
+
+                showResult(result, note);
+            }
+
+            function loadComments() {
+                const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+                commentsDiv.innerHTML = '';
+                if (comments.length === 0) {
+                    commentsDiv.innerHTML = `<p class="text-slate-400 italic">${currentLang === 'en' ? 'No comments yet. Be the first!' : 'Tiada komen lagi.'}</p>`;
+                    return;
+                }
+                comments.forEach(comment => {
+                    const p = document.createElement('p');
+                    p.textContent = comment;
+                    p.className = "py-1.5 px-2";
+                    commentsDiv.appendChild(p);
+                });
+            }
+
+            submitSuggestion.addEventListener('click', function() {
+                const comment = suggestionInput.value.trim();
+                if (comment) {
+                    const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+                    comments.unshift(comment);
+                    localStorage.setItem('comments', JSON.stringify(comments));
+                    suggestionInput.value = '';
+                    loadComments();
+                }
+            });
+
+            updateLanguage();
+            loadComments();
+        });
+    </script>
 </body>
 </html>
